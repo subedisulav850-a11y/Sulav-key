@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>PDF Tool Key Generator</title>
+
+<style>
+body{
+    background:#0d0d1a;
+    color:white;
+    font-family:Arial;
+    text-align:center;
+    margin:0;
+    padding:0;
+}
+.container{
+    max-width:400px;
+    margin:80px auto;
+    background:#14142b;
+    padding:25px;
+    border-radius:10px;
+}
+.btn{
+    background:#4f46e5;
+    border:none;
+    padding:12px 20px;
+    color:white;
+    font-size:16px;
+    border-radius:6px;
+    cursor:pointer;
+    width:100%;
+}
+.hidden{
+    display:none;
+}
+.code-box{
+    background:#000;
+    padding:12px;
+    border-radius:6px;
+    margin-top:10px;
+    word-break:break-all;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>🔐 PDF Key Generator</h2>
+
+    <!-- ACTION PANEL -->
+    <div id="action-panel">
+        <p>Complete shortlink to get access key</p>
+        <button class="btn" id="getKeyBtn">Generate Access Key</button>
+    </div>
+
+    <!-- RESULT PANEL -->
+    <div id="code-panel" class="hidden">
+        <h3>Your Key</h3>
+        <div class="code-box" id="modCode"></div>
+    </div>
+
+</div>
+
+<!-- =========================
+     SHORTLINK REDIRECT
+========================= -->
+<script>
+document.getElementById("getKeyBtn").addEventListener("click", function () {
+
+    const uid = Math.random().toString(36).substring(2, 12);
+    localStorage.setItem("secure_uid", uid);
+
+    // 🔴 REPLACE WITH YOUR REAL JUST2EARN LINK
+    const shortLink = "https://just2earn.in/YOUR_SHORTLINK";
+
+    window.location.href = shortLink + "?uid=" + uid;
+});
+</script>
+
+<!-- =========================
+     SHOW GENERATED KEY
+========================= -->
+<script>
+window.addEventListener("load", function () {
+
+    const params = new URLSearchParams(window.location.search);
+
+    if (
+        params.get("verified") === "1" &&
+        localStorage.getItem("verified") === "true"
+    ) {
+
+        const key = localStorage.getItem("generated_key");
+
+        if (key) {
+            document.getElementById("code-panel").classList.remove("hidden");
+            document.getElementById("modCode").innerText = key;
+            document.getElementById("action-panel").classList.add("hidden");
+            localStorage.removeItem("verified");
+        }
+    }
+});
+</script>
+
+</body>
+</html>

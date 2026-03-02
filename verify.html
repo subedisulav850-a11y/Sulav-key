@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Verification</title>
+</head>
+
+<body style="background:#0d0d1a;color:white;text-align:center;padding:100px;font-family:Arial;">
+
+<h2>🔄 Verifying… Please wait</h2>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const uidFromLink = params.get("uid");
+const savedUID = localStorage.getItem("secure_uid");
+
+function generateKey() {
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let random = "";
+    for (let i = 0; i < 10; i++) {
+        random += chars[Math.floor(Math.random() * chars.length)];
+    }
+    return "Sulav_FF_" + random;
+}
+
+if (uidFromLink && uidFromLink === savedUID) {
+
+    localStorage.setItem("verified", "true");
+    localStorage.setItem("generated_key", generateKey());
+
+    window.location.href = "index.html?verified=1";
+
+} else {
+    document.body.innerHTML = "<h2>❌ Verification Failed</h2>";
+}
+</script>
+
+</body>
+</html>
